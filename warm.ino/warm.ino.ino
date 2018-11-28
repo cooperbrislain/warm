@@ -13,13 +13,13 @@ int space;
 
 void fade(){
     for(int i=0; i<NUM_LEDS; i++){
-       leds[i].fadeToBlackBy( 25 );
+       leds[i].fadeToBlackBy( 4 );
     }
 }
 
 void setup() {
     // put your setup code here, to run once:
-    FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+    FastLED.addLeds<APA102, DATA_PIN, CLOCK_PIN, RGB>(leds, NUM_LEDS);
     for (int i=0; i<NUM_LEDS; i++) {
       leds[i] = CRGB::Black;
     }
@@ -28,20 +28,20 @@ void setup() {
 }
 
 void warm(int which) {
-    leds[which] += CHSV(color,255,200);
+    leds[which] += CHSV(color,255,60);
 }
 
 void loop() {
-    if(count%8 == 0){
+    if(count%10 == 0){
         color = random(255);
         index = random(NUM_LEDS);
         space = random(7)-4;
     }
     warm(index);
     fade();
-    index = (NUM_LEDS+(index+space))%NUM_LEDS;
+    //index = (NUM_LEDS+(index+space))%NUM_LEDS;
     FastLED.show();
     count++;
-    delay(175);
+    delay(75);
 }
 
