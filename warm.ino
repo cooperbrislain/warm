@@ -9,7 +9,6 @@ CRGB leds[NUM_LEDS];
 int index;
 int count;
 int color;
-int space;
 
 void fade(){
     for(int i=0; i<NUM_LEDS; i++){
@@ -27,17 +26,16 @@ void setup() {
     count=0;
 }
 
-void warm(int which) {
-    leds[which] += CHSV(color,255,60);
+void pixelchase() {
+    index++;
+    for(int i=0; i<NUM_LEDS; i++) {
+        leds[i] = CRGB::Black;
+    }
+    leds[index] = CRGB::White;
 }
 
 void loop() {
-    if(count%10 == 0){
-        color = random(255);
-        index = random(NUM_LEDS);
-        space = random(7)-4;
-    }
-    warm(index);
+    pixelchase();
     fade();
     //index = (NUM_LEDS+(index+space))%NUM_LEDS;
     FastLED.show();
